@@ -13,6 +13,7 @@
 #include "AWeek/Character/AWeekPlayerCharacter.h"
 #include "AWeek/Player/AWeekPlayerController.h"
 #include "AWeek/Data/AWeekUIDataAsset.h"
+#include "AWeek/Components/AWeekCraftingComponent.h"
 
 UAWeekGameUIManager::UAWeekGameUIManager()
 {
@@ -80,7 +81,7 @@ void UAWeekGameUIManager::HideInventoryMainPanel()
 	}
 }
 
-void UAWeekGameUIManager::ShowCraftingMainPanel()
+void UAWeekGameUIManager::ShowCraftingMainPanel(const TObjectPtr<UAWeekCraftingComponent> CraftingComponent, const TObjectPtr<UAWeekInventoryComponent> InventoryComponent)
 {
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *FString(__FUNCTION__));
 	if (CraftingMainPanelClass)
@@ -88,6 +89,8 @@ void UAWeekGameUIManager::ShowCraftingMainPanel()
 		CraftingMainPanelWidget = Cast<UAWeekCraftingMainPanel, UCommonActivatableWidget>(
 			UCommonUIExtensions::PushContentToLayer_ForPlayer(LocalPlayer,
 				FGameplayTag::RequestGameplayTag("UI.Layer.GameMenu"), CraftingMainPanelClass));
+		CraftingComponent->UpdateInventoryCounts();
+		CraftingMainPanelWidget->InitializeCraftingMainPanel(CraftingComponent, InventoryComponent);
 	}
 }
 
@@ -138,11 +141,11 @@ void UAWeekGameUIManager::ToggleChestInventory(TObjectPtr<UAWeekInventoryCompone
 	}
 }
 
-void UAWeekGameUIManager::ToggleCraftingMainPanel()
+void UAWeekGameUIManager::ToggleCraftingMainPanel(const TObjectPtr<UAWeekCraftingComponent> CraftingComponent, const TObjectPtr<UAWeekInventoryComponent> InventoryComponent)
 {
 	if (!IsValid(CraftingMainPanelWidget) || !CraftingMainPanelWidget->IsActivated())
 	{
-		ShowCraftingMainPanel();
+		ShowCraftingMainPanel(CraftingComponent, InventoryComponent);
 		PlayerController->SetShowMouseCursor(true);
 	}
 	else

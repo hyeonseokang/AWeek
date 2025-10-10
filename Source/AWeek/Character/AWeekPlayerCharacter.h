@@ -140,7 +140,7 @@ protected:
 	TScriptInterface<IAWeekInteractionInterface> TargetInteractable;
 
 	UPROPERTY(VisibleAnywhere, Category = "Character | Inventory")
-	TObjectPtr<UAWeekInventoryComponent> PlayerInventory;
+	TObjectPtr<UAWeekInventoryComponent> PlayerInventoryComponent;
 
 	UPROPERTY(VisibleAnywhere, Category = "Character | Crafting")
 	TObjectPtr<UAWeekCraftingComponent> CraftingComponent;
@@ -212,7 +212,8 @@ public:
 	// INVENTORY SYSTEM
 	// =====================================================
 	FORCEINLINE bool IsInteracting() const { return GetWorldTimerManager().IsTimerActive(TimerHandle_Interaction); }
-	FORCEINLINE TObjectPtr<UAWeekInventoryComponent> GetInventory() const { return PlayerInventory; }
+	FORCEINLINE UAWeekInventoryComponent* GetPlayerInventoryComponent() const { return PlayerInventoryComponent; }
+	FORCEINLINE UAWeekCraftingComponent* GetCraftingComponent() const { return CraftingComponent; }
 	void UpdateInteractionWidget() const;
 	void ToggleInventoryMainPanel();
 	void DropItemFromItemSlot(const FAWeekInventorySlotData& ItemSlot, const int32 QuantityToDrop);

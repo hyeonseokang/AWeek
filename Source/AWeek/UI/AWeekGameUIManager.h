@@ -6,6 +6,7 @@
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "AWeekGameUIManager.generated.h"
 
+class UAWeekCraftingComponent;
 class UAWeekCraftingMainPanel;
 class UAWeekUIDataAsset;
 class AAWeekPlayerController;
@@ -50,7 +51,7 @@ public:
 	void ToggleInventoryMainPanel();
 	void ToggleChestInventory(TObjectPtr<UAWeekInventoryComponent> ChestInventory);
 
-	void ToggleCraftingMainPanel();
+	void ToggleCraftingMainPanel(TObjectPtr<UAWeekCraftingComponent> CraftingComponent, const TObjectPtr<UAWeekInventoryComponent> InventoryComponent);
 	// void ShowCrosshair();
 	// void HideCrosshair();
 
@@ -118,7 +119,7 @@ protected:
 	void ShowInventoryMainPanel();
 	void HideInventoryMainPanel();
 
-	void ShowCraftingMainPanel();
+	void ShowCraftingMainPanel(TObjectPtr<UAWeekCraftingComponent> CraftingComponent, const TObjectPtr<UAWeekInventoryComponent> InventoryComponent);
 
 private:
 	UPROPERTY(EditAnywhere, Category = "UI Settings")
